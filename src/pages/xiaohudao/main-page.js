@@ -5,6 +5,9 @@ import { VideoPanelList } from '../../common/videoPanelList/video-panel-list';
 
 const MainPage = ({ uid }) => {
   return <div className='MainPage'>
+    <div className='VideoPanel'>
+      <VideoPanel />
+    </div>
     <div className='VideoList'>
       <VideoPanelList
         VideoPanelComponentList={
@@ -96,9 +99,6 @@ const MainPage = ({ uid }) => {
           ]
         }
       />
-    </div>
-    <div className='VideoPanel'>
-      <VideoPanel />
     </div>
   </div>
 }

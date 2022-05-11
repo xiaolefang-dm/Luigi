@@ -19,7 +19,7 @@ const VideoPanelList = ({ VideoPanelComponentList = [] }) => {
           {
             <video id={videoPanelComponent.url} width="100%"></video>
           }
-          <div className="name">{videoPanelComponent.name}</div>
+          <div className="name-list">{videoPanelComponent.name}</div>
         </div>
       )
     }

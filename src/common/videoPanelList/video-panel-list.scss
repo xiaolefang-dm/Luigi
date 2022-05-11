@@ -4,10 +4,10 @@
   background: url(../../assets/xiaohudao/icons/fireman.svg) no-repeat center #303236;
   background-size: 20%;
   border-radius: 1px;
-  display: flex;
   position: relative;
-  width: 100%;
-  .name {
+  width: 20vw;
+  height: 10vh;
+  .name-list {
     background-color: black;
     bottom: 0;
     color: white;
@@ -27,44 +27,5 @@
       position: absolute;
       width: 1.3rem;
     }
-  }
-
-  video {
-    height: 100%;
-    position: relative;
-    width: 100%;
-  }
-
-  .video-close {
-    background-image: url(../../assets/xiaohudao/icons/close.svg);
-    background-size: 100%;
-    height: 10px;
-    position: absolute;
-    right: 5px;
-    top: 5px;
-    width: 10px;
-  }
-
-  .video-collapse {
-    background-image: url(../../assets/xiaohudao/icons/collapse.svg);
-    background-size: 100%;
-    height: 20px;
-    position: absolute;
-    right: 10px;
-    top: 10px;
-    width: 20px;
-    z-index: 310;
-  }
-
-  &.expand {
-    background-color: rgba(0,0,0,0.9);
-    height: 100%;
-    left:0;
-    margin-left: 0 !important;
-    padding: 20px;
-    position: absolute;
-    top:0;
-    width: 100%;
-    z-index: 300 !important;
   }
 }
