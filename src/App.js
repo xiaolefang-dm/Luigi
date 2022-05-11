@@ -2,7 +2,6 @@ import { LoginPanel } from './common/LoginPanel/login-panel.js'
 import React from "react";
 import AgoraRTC from 'agora-rtc-sdk-ng';
 import { getAdminPasswdUrl, jsonHeader, loginService, agoraTokenServiceRTC } from "./configs/xiaohudao/config.js";
-import './App.css';
 import LoginPage from './pages/xiaohudao/login-page.js';
 import MainPage from './pages/xiaohudao/main-page.js';
 

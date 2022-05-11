@@ -3,7 +3,7 @@ import { ReactComponent } from '../../assets/xiaohudao/icons/tiger.svg';
 import { LoginPanel } from '../../common/LoginPanel/login-panel.js';
 
 const LoginPage = ({loginProcessing}) => {
-  return <div className="App">
+  return <div className="login">
     <LoginPanel
       loginProcessing={loginProcessing}
       requireName={true}

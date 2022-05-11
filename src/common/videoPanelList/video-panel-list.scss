@@ -1,11 +1,12 @@
 .video-panel-wrapper-list {
   margin-left: 1%;
+  margin-top:1%;
   background: url(../../assets/xiaohudao/icons/fireman.svg) no-repeat center #303236;
   background-size: 20%;
   border-radius: 1px;
-  display: inline-block;
+  display: flex;
   position: relative;
-  width: 400px;
+  width: 100%;
   .name {
     background-color: black;
     bottom: 0;
