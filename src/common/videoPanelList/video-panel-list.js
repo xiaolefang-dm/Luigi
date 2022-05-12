@@ -10,7 +10,7 @@ import './video-panel-list.scss';
  * }
 */
 
-const VideoPanelList = ({ VideoPanelComponentList = [] }) => {
+const VideoPanelList = ({ VideoPanelComponentList = [], Title = '' }) => {
   const list = [];
   VideoPanelComponentList.map(
     (videoPanelComponent) => {
@@ -24,7 +24,12 @@ const VideoPanelList = ({ VideoPanelComponentList = [] }) => {
       )
     }
   )
-  return list;
+  return (
+    <div className='whole-list'>
+      <div className='title'><p>{Title}</p></div>
+      <div className='video'>{list}</div>
+    </div>
+  );
 };
 
 export { VideoPanelList };

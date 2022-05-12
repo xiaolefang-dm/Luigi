@@ -1,31 +1,47 @@
-.video-panel-wrapper-list {
-  margin-left: 1%;
-  margin-top:1%;
-  background: url(../../assets/xiaohudao/icons/fireman.svg) no-repeat center #303236;
-  background-size: 20%;
-  border-radius: 1px;
-  position: relative;
-  width: 20vw;
-  height: 10vh;
-  .name-list {
-    background-color: black;
-    bottom: 0;
-    color: white;
-    left: 0.4rem;
-    padding-left: 0.4rem;
-    padding-right: 0.4rem;
-    position: absolute;
-    z-index: 99;
+.whole-list {
+  width: 100%;
+  height: 100%;
+  border-color: #303236;
+  border-width: 5px;
+  border-radius: 10px;
+  .title {
+    text-align: center;
+    height: 30px;
+  }
+  .video {
+    width: 14vw;
+    margin-left: 1vw;
+    height: calc(100vh - 30px);
+    position: relative;
+    overflow-x: auto;
+    .video-panel-wrapper-list {
+      margin-top: 1%;
+      background: url(../../assets/xiaohudao/icons/fireman.svg) no-repeat center #303236;
+      background-size: 20%;
+      border-radius: 5px;
+      position: relative;
+      width: 12vw;
+      height: 7vw;
+      .name-list {
+        background-color: black;
+        bottom: 0;
+        color: white;
+        left: 0.4rem;
+        padding-left: 0.4rem;
+        padding-right: 0.4rem;
+        position: absolute;
+        z-index: 99;
 
-    &.mute:after {
-      background: url(../../assets/xiaohudao/icons/microphone-off-filled.svg) center
-        no-repeat black;
-      background-size: 72%;
-      content: '';
-      height: 100%;
-      padding-right: 0.5rem;
-      position: absolute;
-      width: 1.3rem;
+        &.mute:after {
+          background: url(../../assets/xiaohudao/icons/microphone-off-filled.svg) center no-repeat black;
+          background-size: 72%;
+          content: "";
+          height: 100%;
+          padding-right: 0.5rem;
+          position: absolute;
+          width: 1.3rem;
+        }
+      }
     }
   }
 }
