@@ -11,7 +11,10 @@ let agoraRTC = null;
 function App() {
   
   var uid = 0;
+  var socket = null;
+  var users = [];
 
+  const [cloudCameras,setCloudCameras] = React.useState([]);
   const [user, setUser] = React.useState({});
   const [logged, setLogged] = React.useState(false);
 
@@ -39,6 +42,32 @@ function App() {
 		}
 	};
 
+  const socketProcessing = () => {
+    socket = new WebSocket("wss://xhd.deepmirror.com.cn:50802");
+    socket.onopen = function (event) {
+        socket.send(`${user.name}---0731---html_browser---${user.uid}`);
+    };
+    socket.onmessage = function (event) {
+      var msg = JSON.parse(event.data);
+      if (msg.stream) {
+          console.log('checkout the playing list');
+          const cloudCamerasNew = [];
+          console.log(msg.stream)
+          Object.keys( msg.stream ).map(key => 
+            cloudCamerasNew.push(msg.stream[key])
+          )
+          setCloudCameras(cloudCamerasNew)
+      }
+      if (msg.users) {
+          users = msg.users;
+          console.log(users);
+      }
+      if (msg.chats) {
+          console.log(msg.chats);
+      }
+    };
+  };
+
   const agoraRtcLogin = async(name) => {
 		uid = Math.floor(Math.random() * 100000);
     const res = await fetch(agoraTokenServiceRTC + `?uid=${uid}&channel_name=tiger`);
@@ -51,7 +80,9 @@ function App() {
         uid: response.uid,
       }
     );
+    socketProcessing()
     setLogged(true);
+    
   }
 
   const loginProcessing = async (name, passwd) => {
@@ -74,6 +105,7 @@ function App() {
   if (logged) {
     return <MainPage 
       uid={user.uid}
+      cloudCameras={cloudCameras}
     />
   }
   return (

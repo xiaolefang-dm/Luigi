@@ -1,6 +1,6 @@
 import React from 'react';
 import { ReactComponent } from '../../assets/xiaohudao/icons/tiger.svg';
-import { LoginPanel } from '../../common/LoginPanel/login-panel.js';
+import { LoginPanel } from '../../common/login-panel/login-panel.js';
 
 const LoginPage = ({loginProcessing}) => {
   return <div className="login">

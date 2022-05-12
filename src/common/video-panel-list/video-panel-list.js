@@ -15,7 +15,7 @@ const VideoPanelList = ({ VideoPanelComponentList = [], Title = '' }) => {
   VideoPanelComponentList.map(
     (videoPanelComponent) => {
       list.push(
-        <div className={'video-panel-wrapper-list'} id={videoPanelComponent.url}>
+        <div key={videoPanelComponent.url} className={'video-panel-wrapper-list'} id={videoPanelComponent.url}>
           {
             <video id={videoPanelComponent.url} width="100%"></video>
           }
