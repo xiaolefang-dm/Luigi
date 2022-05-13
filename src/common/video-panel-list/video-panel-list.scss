@@ -5,13 +5,16 @@
   border-width: 5px;
   border-radius: 10px;
   .title {
+    height: 2vh;
     text-align: center;
-    height: 30px;
+  }
+  .addStream {
+    height: 8vh;
   }
   .video {
     width: 14vw;
     margin-left: 1vw;
-    height: calc(100vh - 30px);
+    height: 90vh;
     position: relative;
     overflow-x: auto;
     .video-panel-wrapper-list {
@@ -26,21 +29,19 @@
         background-color: black;
         bottom: 0;
         color: white;
-        left: 0.4rem;
         padding-left: 0.4rem;
         padding-right: 0.4rem;
         position: absolute;
         z-index: 99;
-
-        &.mute:after {
-          background: url(../../assets/xiaohudao/icons/microphone-off-filled.svg) center no-repeat black;
-          background-size: 72%;
-          content: "";
-          height: 100%;
-          padding-right: 0.5rem;
-          position: absolute;
-          width: 1.3rem;
-        }
+      }
+      .close-list {
+        background-color: black;
+        top: 0;
+        color: white;
+        padding-left: 0.4rem;
+        padding-right: 0.4rem;
+        position: absolute;
+        z-index: 99;
       }
     }
   }

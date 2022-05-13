@@ -11,12 +11,12 @@ let agoraRTC = null;
 function App() {
   
   var uid = 0;
-  var socket = null;
   var users = [];
 
   const [cloudCameras,setCloudCameras] = React.useState([]);
   const [user, setUser] = React.useState({});
   const [logged, setLogged] = React.useState(false);
+  const [currentSocket, setCurrrentSocket] = React.useState(null);
 
   const initAgora = async () => {
 		agoraRTC = AgoraRTC.createClient({ mode: 'live', codec: 'h264' });
@@ -43,7 +43,7 @@ function App() {
 	};
 
   const socketProcessing = () => {
-    socket = new WebSocket("wss://xhd.deepmirror.com.cn:50802");
+    const socket = new WebSocket("wss://xhd.deepmirror.com.cn:50802");
     socket.onopen = function (event) {
         socket.send(`${user.name}---0731---html_browser---${user.uid}`);
     };
@@ -52,7 +52,6 @@ function App() {
       if (msg.stream) {
           console.log('checkout the playing list');
           const cloudCamerasNew = [];
-          console.log(msg.stream)
           Object.keys( msg.stream ).map(key => 
             cloudCamerasNew.push(msg.stream[key])
           )
@@ -66,6 +65,7 @@ function App() {
           console.log(msg.chats);
       }
     };
+    setCurrrentSocket(socket);
   };
 
   const agoraRtcLogin = async(name) => {
@@ -106,6 +106,21 @@ function App() {
     return <MainPage 
       uid={user.uid}
       cloudCameras={cloudCameras}
+      selectVideoFunc={ v => {
+        currentSocket.send(v)
+      }}
+      addVideoFunc={
+        (name, code) => {
+          const data = 'add_stream_list:{"name":"' + name + '", "url":"' + code + '"}';
+          currentSocket.send(data);
+          window.alert(name + "视频源已经添加完成");
+        }
+      }
+      deleteVideoFunc={
+        (value) => {
+          currentSocket.send(value);
+        }
+      }
     />
   }
   return (
