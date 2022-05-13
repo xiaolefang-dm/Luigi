@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Checkbox, Input } from 'semantic-ui-react';
+import { Button, Checkbox, Dropdown, Menu, Icon } from 'semantic-ui-react';
 import { ReactComponent as OfflineReactComponent } from '../../assets/common/icons/offline.svg';
 import { ReactComponent as OnlineReactComponent } from '../../assets/common/icons/online.svg';
 import FlvJs from 'flv.js';
@@ -13,6 +13,11 @@ import './video-panel-list.scss';
  *   selected: false,
  * }
 */
+const options = [
+  { key: 'edit', icon: 'edit', text: 'Edit Post', value: 'edit' },
+  { key: 'delete', icon: 'delete', text: 'Remove Post', value: 'delete' },
+  { key: 'hide', icon: 'hide', text: 'Hide Post', value: 'hide' },
+]
 
 const VideoPanelList = ({
   VideoPanelComponentList = [], Title = '',

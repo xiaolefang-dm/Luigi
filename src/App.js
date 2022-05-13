@@ -3,7 +3,6 @@ import AgoraRTC from 'agora-rtc-sdk-ng';
 import { getAdminPasswdUrl, jsonHeader, loginService, agoraTokenServiceRTC } from "./configs/xiaohudao/config.js";
 import LoginPage from './pages/xiaohudao/login-page.js';
 import MainPage from './pages/xiaohudao/main-page.js';
-import './App.scss';
 
 // Agora sdk for Real Time Communication(audio and video).
 let agoraRTC = null;
