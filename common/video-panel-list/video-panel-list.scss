@@ -3,20 +3,25 @@
   height: 100%;
 
   .title {
-    height: 2vh;
+    height: 30px;
     text-align: center;
+    font-weight: 400;
+    font-size: larger;
   }
 
   .addStream {
-    height: 8vh;
-    border: double;
+    width: 99%;
+    height: 75px;
     text-align: center;
+    font-size: medium;
+    overflow: auto;
+    border: outset;
   }
 
   .video {
     width: 14vw;
     margin-left: 1vw;
-    height: 90vh;
+    height: calc(99vh - 105px);
     position: relative;
     overflow-x: auto;
 
@@ -41,12 +46,12 @@
 
       .name-list {
         background-color: black;
+        width: 100%;
         bottom: 0;
         color: white;
-        padding-left: 0.4rem;
-        padding-right: 0.4rem;
         position: absolute;
         z-index: 99;
+        display: flex;
       }
 
       .close-list {

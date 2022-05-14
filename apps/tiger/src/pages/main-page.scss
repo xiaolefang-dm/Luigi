@@ -28,12 +28,18 @@
 
     .MessagePanel {
       width: 66vw;
+      height: 31vh;
       margin-top: 2vh;
       min-height: calc(32vh - 50px);
-      background-color: cadetblue;
+      background-color:beige;
       border-radius: 20px;
-      text-align: center;
+      text-align: start;
       font-size: larger;
+      overflow: auto;
+      .chat {
+        font-size: xx-large;
+        color: black;
+      }
     }
   }
 

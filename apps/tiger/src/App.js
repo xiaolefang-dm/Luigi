@@ -16,6 +16,7 @@ function App() {
   const [user, setUser] = React.useState({});
   const [logged, setLogged] = React.useState(false);
   const [currentSocket, setCurrrentSocket] = React.useState(null);
+  const [chats, setChats] =  React.useState([]);
 
   const initAgora = async () => {
 		agoraRTC = AgoraRTC.createClient({ mode: 'live', codec: 'h264' });
@@ -61,7 +62,7 @@ function App() {
           console.log(users);
       }
       if (msg.chats) {
-          console.log(msg.chats);
+          setChats(msg.chats);
       }
     };
     setCurrrentSocket(socket);
@@ -120,6 +121,7 @@ function App() {
           currentSocket.send(value);
         }
       }
+      chats={chats}
     />
   }
   return (

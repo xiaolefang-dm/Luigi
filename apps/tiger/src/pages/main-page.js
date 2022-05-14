@@ -6,7 +6,8 @@ import { UserPanelList } from '../../../../common/user-panel-list/user-panel-lis
 
 const MainPage = ({ uid, cloudCameras, selectVideoFunc = () => {}, 
   addVideoFunc = () => {},
-  deleteVideoFunc = () => {}}) => {
+  deleteVideoFunc = () => {},
+  chats = []}) => {
   return <div className='MainPage'>
     <div className='VideoList'>
       <VideoPanelList
@@ -21,7 +22,7 @@ const MainPage = ({ uid, cloudCameras, selectVideoFunc = () => {},
     <div className='VideoPanel'>
       <div className='video'><VideoPanel name='' flvVideoId='bigScreen'/></div>
       <div className='MessagePanel'>
-        <p>test</p>
+        {chats.map(chat => <p className='chat'>{chat}</p>)}
       </div>
     </div>
     <div className='UserList'>

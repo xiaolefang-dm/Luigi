@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Checkbox, Dropdown, Menu, Icon } from 'semantic-ui-react';
+import { Button, Checkbox } from 'semantic-ui-react';
 import FlvJs from 'flv.js';
 import './video-panel-list.scss';
 
