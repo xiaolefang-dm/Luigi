@@ -47,11 +47,32 @@ function App() {
     }
   };
 
+  const handleUserUnpublished = (user, mediaType) => {
+    console.log('Chen: user-unpublished ', user.uid, mediaType);
+  };
+
+  const handleUserLeft = (user, mediaType) => {
+    console.log('Chen: user-left ', user.uid, mediaType);
+    if (users.filter((r) => r.uid === user.uid).length === 1) {
+      let idx = 0;
+      for (let i = 0; i < users.length; i++) {
+        if (users[i].uid === user.uid) {
+          idx = i;
+          break;
+        }
+      }
+      users.splice(idx, 1);
+      setUsers(users);
+    }
+  };
+
   const initAgora = async () => {
     agoraRTC = AgoraRTC.createClient({ mode: 'live', codec: 'h264' });
     agoraRTC.setClientRole("host");
     agoraRTC.on('user-published', handleUserPublished);
     agoraRTC.on('user-joined', handleUserJoined);
+    agoraRTC.on('user-unpublished', handleUserUnpublished);
+    agoraRTC.on('user-left', handleUserLeft);
     if (logged)
       joinRTCChannel();
   };
