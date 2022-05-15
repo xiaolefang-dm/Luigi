@@ -8,73 +8,102 @@ import MainPage from './pages/main-page.js';
 let agoraRTC = null;
 
 function App() {
-  
-  var uid = 0;
-  var users = [];
 
-  const [cloudCameras,setCloudCameras] = React.useState([]);
+  var uid = 0;
+
+  const [cloudCameras, setCloudCameras] = React.useState([]);
   const [user, setUser] = React.useState({});
   const [logged, setLogged] = React.useState(false);
   const [currentSocket, setCurrrentSocket] = React.useState(null);
-  const [chats, setChats] =  React.useState([]);
+  const [chats, setChats] = React.useState([]);
+  const [users, setUsers] = React.useState([]);
+
+  const handleUserPublished = async (user, mediaType) => {
+    console.log('User-published ', user.uid, mediaType);
+    await agoraRTC.subscribe(user, mediaType);
+    const peer = remotePeers.filter((r) => r.uid === user.uid);
+    console.log(remotePeers)
+    if (mediaType === 'video' && !peer[0].video_playing) {
+      const remoteVideoTrack = user.videoTrack;
+
+      remoteVideoTrack.play(user.uid);
+      peer[0].video_playing = true;
+    }
+    if (mediaType === 'audio' && !peer[0].audio_playing) {
+      const remoteAudioTrack = user.audioTrack;
+      remoteAudioTrack.play();
+      peer[0].audio_playing = true;
+    }
+  };
+
+  const handleUserJoined = (user) => {
+    console.log('User-joined ', user.uid, remotePeers);
+    //agoraRTC.publish([localAudioTrack, localVideoTrack]);
+    if (users.filter((r) => r.uid === user.uid).length === 0) {
+      const currentUser = users.filter(user1 => user1.uid === user.uid.toString())
+      user.name = currentUser.length > 0 ? currentUser[0].user : '未知';
+      users.push(user);
+      setUsers(users);
+    }
+  };
 
   const initAgora = async () => {
-		agoraRTC = AgoraRTC.createClient({ mode: 'live', codec: 'h264' });
-		agoraRTC.setClientRole("host");
-		agoraRTC.on('user-published', () => {});
-		agoraRTC.on('user-joined', () => {});
-		agoraRTC.on('user-left', () => {});
-		agoraRTC.on('user-unpublished', () => {});
+    agoraRTC = AgoraRTC.createClient({ mode: 'live', codec: 'h264' });
+    agoraRTC.setClientRole("host");
+    agoraRTC.on('user-published', handleUserPublished);
+    agoraRTC.on('user-joined', handleUserJoined);
     if (logged)
-		  joinRTCChannel();
-	};
+      joinRTCChannel();
+  };
 
   React.useEffect(() => {
     initAgora();
-  },[user]);
+  }, [user]);
 
   const joinRTCChannel = async () => {
-		try {
-			const uid1 = agoraRTC.join(user.appId, user.channelName, user.token, user.uid);
-			console.log(uid1);
-		} catch (e) {
-			throw new Error('Join channel failed');
-		}
-	};
+    try {
+      const uid1 = agoraRTC.join(user.appId, user.channelName, user.token, user.uid);
+      console.log(uid1);
+    } catch (e) {
+      throw new Error('Join channel failed');
+    }
+  };
 
   const socketProcessing = () => {
     const socket = new WebSocket("wss://xhd.deepmirror.com.cn:50802");
+    const name = 'admin';
+    const uid_1 = Math.ceil(Math.random() * 10000)
+    console.log(uid_1);
     socket.onopen = function (event) {
-        socket.send(`${user.name}---0731---html_browser---${user.uid}`);
+      socket.send(`${name}---0731---html_browser---${uid_1}`);
     };
     socket.onmessage = function (event) {
       var msg = JSON.parse(event.data);
       if (msg.stream) {
-          console.log('checkout the playing list');
-          const cloudCamerasNew = [];
-          Object.keys( msg.stream ).map(key => 
-            cloudCamerasNew.push(msg.stream[key])
-          )
-          setCloudCameras(cloudCamerasNew)
+        console.log('checkout the playing list');
+        const cloudCamerasNew = [];
+        Object.keys(msg.stream).map(key =>
+          cloudCamerasNew.push(msg.stream[key])
+        )
+        setCloudCameras(cloudCamerasNew)
       }
       if (msg.users) {
-          users = msg.users;
-          console.log(users);
+        setUsers(msg.users);
       }
       if (msg.chats) {
-          setChats(msg.chats);
+        setChats(msg.chats);
       }
     };
     setCurrrentSocket(socket);
   };
 
-  const agoraRtcLogin = async(name) => {
-		uid = Math.floor(Math.random() * 100000);
+  const agoraRtcLogin = async (name) => {
+    uid = Math.floor(Math.random() * 100000);
     const res = await fetch(agoraTokenServiceRTC + `?uid=${uid}&channel_name=tiger`);
-		const response = await res.json();
+    const response = await res.json();
     setUser(
       {
-        name:name,
+        name: name,
         appId: response.appId,
         channelName: response.channelName,
         uid: response.uid,
@@ -82,7 +111,7 @@ function App() {
     );
     socketProcessing()
     setLogged(true);
-    
+
   }
 
   const loginProcessing = async (name, passwd) => {
@@ -103,10 +132,10 @@ function App() {
       window.alert('口令错误')
   }
   if (logged) {
-    return <MainPage 
+    return <MainPage
       uid={user.uid}
       cloudCameras={cloudCameras}
-      selectVideoFunc={ v => {
+      selectVideoFunc={v => {
         currentSocket.send(v)
       }}
       addVideoFunc={
@@ -122,11 +151,12 @@ function App() {
         }
       }
       chats={chats}
+      users={users}
     />
   }
   return (
     <LoginPage
-      loginProcessing={loginProcessing} 
+      loginProcessing={loginProcessing}
     />
   );
 }

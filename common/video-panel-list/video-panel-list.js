@@ -31,7 +31,7 @@ const VideoPanelList = ({
 
   VideoPanelComponentList.map(
     (videoPanelComponent) => {
-      if (videoPanelComponent.valid)
+      if (videoPanelComponent.valid && !videoPanelComponent.play)
         setTimeout(() => {
           let videoElement = document.getElementById(videoPanelComponent.url + '-video');
           let flvPlayer = FlvJs.createPlayer({ type: 'flv', url: `https://xhd.deepmirror.com.cn:8088/live/${videoPanelComponent.url}.flv` });
@@ -45,11 +45,13 @@ const VideoPanelList = ({
               flvPlayer.attachMediaElement(videoElement);
               flvPlayer.load();
               flvPlayer.play();
+              videoPanelComponent.play = true;
             }, 200);
           });
           flvPlayer.attachMediaElement(videoElement);
           flvPlayer.load();
           flvPlayer.play();
+          videoPanelComponent.play = true;
         }, 200);
       list.push(
         <div key={videoPanelComponent.url} className={'video-panel-wrapper-list'} id={videoPanelComponent.url}>

@@ -7,7 +7,9 @@ import { UserPanelList } from '../../../../common/user-panel-list/user-panel-lis
 const MainPage = ({ uid, cloudCameras, selectVideoFunc = () => {}, 
   addVideoFunc = () => {},
   deleteVideoFunc = () => {},
+  users = [],
   chats = []}) => {
+  console.log(users)
   return <div className='MainPage'>
     <div className='VideoList'>
       <VideoPanelList
@@ -28,136 +30,7 @@ const MainPage = ({ uid, cloudCameras, selectVideoFunc = () => {},
     <div className='UserList'>
       <UserPanelList
         Title={'在线用户'}
-        Users={
-          [
-            {
-              name: 'test',
-              url: 'xxxxx.flv',
-              online: false,
-              selected: false,
-            },
-            {
-              name: 'test',
-              url: 'xxxxx.flv',
-              online: false,
-              selected: false,
-            },
-            {
-              name: 'test',
-              url: 'xxxxx.flv',
-              online: false,
-              selected: false,
-            },
-            {
-              name: 'test',
-              url: 'xxxxx.flv',
-              online: false,
-              selected: false,
-            },
-            {
-              name: 'test',
-              url: 'xxxxx.flv',
-              online: false,
-              selected: false,
-            },
-            {
-              name: 'test',
-              url: 'xxxxx.flv',
-              online: false,
-              selected: false,
-            },
-            {
-              name: 'test',
-              url: 'xxxxx.flv',
-              online: false,
-              selected: false,
-            },
-            {
-              name: 'test',
-              url: 'xxxxx.flv',
-              online: false,
-              selected: false,
-            },
-            {
-              name: 'test',
-              url: 'xxxxx.flv',
-              online: false,
-              selected: false,
-            },
-            {
-              name: 'test',
-              url: 'xxxxx.flv',
-              online: false,
-              selected: false,
-            },
-            {
-              name: 'test',
-              url: 'xxxxx.flv',
-              online: false,
-              selected: false,
-            },
-            {
-              name: 'test',
-              url: 'xxxxx.flv',
-              online: false,
-              selected: false,
-            },
-            {
-              name: 'test',
-              url: 'xxxxx.flv',
-              online: false,
-              selected: false,
-            },
-            {
-              name: 'test',
-              url: 'xxxxx.flv',
-              online: false,
-              selected: false,
-            },
-            {
-              name: 'test',
-              url: 'xxxxx.flv',
-              online: false,
-              selected: false,
-            },
-            {
-              name: 'test',
-              url: 'xxxxx.flv',
-              online: false,
-              selected: false,
-            },
-            {
-              name: 'test',
-              url: 'xxxxx.flv',
-              online: false,
-              selected: false,
-            },
-            {
-              name: 'test',
-              url: 'xxxxx.flv',
-              online: false,
-              selected: false,
-            },
-            {
-              name: 'test',
-              url: 'xxxxx.flv',
-              online: false,
-              selected: false,
-            },
-            {
-              name: 'test',
-              url: 'xxxxx.flv',
-              online: false,
-              selected: false,
-            },
-            {
-              name: 'test',
-              url: 'xxxxx.flv',
-              online: false,
-              selected: false,
-            },
-          ]
-        } />
+        Users={users} />
     </div>
   </div>
 }

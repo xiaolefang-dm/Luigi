@@ -15,11 +15,8 @@ const UserPanelList = ({ Users = [], Title = '' }) => {
   Users.map(
     (videoPanelComponent) => {
       list.push(
-        <div className={'user-panel-wrapper-list'} id={videoPanelComponent.url}>
-          {
-            <video id={videoPanelComponent.url}  width="100%"></video>
-          }
-          <div className="name-list">{videoPanelComponent.name}</div>
+        <div className={'user-panel-wrapper-list'} id={videoPanelComponent.uid}>
+          <div className="name-list">{videoPanelComponent.user}</div>
         </div>
       )
     }
