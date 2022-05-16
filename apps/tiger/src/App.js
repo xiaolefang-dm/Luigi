@@ -110,7 +110,6 @@ function App() {
         setCloudCameras(cloudCamerasNew)
       }
       if (msg.users) {
-        console.log(user.uid)
         setUsers(msg.users.filter(_user => _user.url !== `html_browser`));
       }
       if (msg.chats) {
@@ -181,6 +180,16 @@ function App() {
           currentSocket.send(value);
         }
       }
+      optionsUsers={
+        [
+          {
+            name: '静音',
+            work: videoComponent => {
+              console.log(videoComponent)
+            }
+          }
+        ]
+      }
       switchMeeting={
         () => {
           currentSocket.send('----meeting_on----' + !meetingOn);
@@ -217,6 +226,18 @@ function App() {
       chats={chats}
       users={users}
       meetingOn={meetingOn}
+      adminMuteFunc={user => {
+        if (meetingOn)
+          currentSocket.send(`adminmuted---${user.uid}`);
+        else
+          window.alert('会议尚未开始');
+      }}
+      adminTurnCameraFunc={user => {
+        if (meetingOn)
+          currentSocket.send(`adminwork---${user.uid}`)
+        else
+          window.alert('会议尚未开始');
+      }}
     />
   }
   return (

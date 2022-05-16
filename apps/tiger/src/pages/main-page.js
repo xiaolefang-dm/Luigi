@@ -14,8 +14,11 @@ const MainPage = ({ uid, cloudCameras, selectVideoFunc = () => { },
   switchMeeting = () => { },
   changePasswd = () => { },
   changeAdminPasswd = () => { },
+  adminMuteFunc = () => { },
+  adminTurnCameraFunc = () => { },
   users = [],
   chats = [],
+  optionsUsers = [],
   meetingOn = false }) => {
   console.log(users)
   return <div className='MainPage'>
@@ -55,7 +58,11 @@ const MainPage = ({ uid, cloudCameras, selectVideoFunc = () => { },
     <div className='UserList'>
       <UserPanelList
         Title={'在线用户'}
-        Users={users} />
+        Users={users}
+        options={optionsUsers}
+        adminMuteFunc={adminMuteFunc} 
+        adminTurnCameraFunc={adminTurnCameraFunc}
+      />
     </div>
   </div>
 }

@@ -30,11 +30,12 @@
         background-color: black;
         bottom: 0;
         color: white;
-        left: 0.4rem;
-        padding-left: 0.4rem;
-        padding-right: 0.4rem;
         position: absolute;
         z-index: 99;
+        display: flex;
+        .icon {
+          margin-right: 5px;
+        }
 
         &.mute:after {
           background: url(../../assets/common/icons/microphone-off-filled.svg) center no-repeat black;

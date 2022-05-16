@@ -14,8 +14,9 @@ import MenuItem from '@mui/material/MenuItem';
 */
 
 const UserPanelList = ({ Users = [], Title = '', options = [{
-  name: 'test', function: () => { console.log('test') }
-}] }) => {
+  name: 'test', work: () => { console.log('test') }
+}], adminMuteFunc = (source) => {console.log(source)}, 
+adminTurnCameraFunc = (source) => {console.log(source)}, }) => {
   const list = [];
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
@@ -51,12 +52,34 @@ const UserPanelList = ({ Users = [], Title = '', options = [{
             }}
           >
             {options.map(option => <MenuItem onClick={() => {
-              option.function(videoPanelComponent);
+              option.work(videoPanelComponent);
               setAnchorEl(null);
             }}>{option.name}</MenuItem>)}
           </Menu>
         </div>
-          <div className="name-list">{decodeURIComponent(videoPanelComponent.user)}</div>
+          <div className="name-list">
+            <div className='icon'>
+              {decodeURIComponent(videoPanelComponent.user)}
+            </div>
+            <div className='icon'>
+              {
+                <img
+                  src={videoPanelComponent.speaking ?
+                    '../../assets/common/icons/microphone-filled.svg' :
+                    '../../assets/common/icons/microphone-off-filled.svg'}
+                  width='20rem' height='20rem' onClick={() => adminMuteFunc(videoPanelComponent)} />
+              }
+            </div>
+            <div className='icon'>
+              {
+                <img
+                  src={videoPanelComponent.work ?
+                    '../../assets/common/icons/camera1.svg' :
+                    '../../assets/common/icons/camera1-off.svg'}
+                  width='20rem' height='20rem' onClick={() => adminTurnCameraFunc(videoPanelComponent)} />
+              }
+            </div>
+          </div>
         </div>
       )
     }
