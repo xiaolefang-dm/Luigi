@@ -44,29 +44,25 @@
         text-align-last: center;
         .enableMeeting {
           width: 15vw;
-          height: 5vh;
-          background-color: green;
-          font-size: xx-large;
-        }
-        .disableMeeting {
-          width: 15vw;
-          height: 5vh;
-          background-color: gray;
-          font-size: xx-large;
+          height: 50px;
+          font-size: x-large;
+          border-radius: 20px;
         }
         .pswdSetting {
-          margin-top: 10px;
+          margin-top: 20px;
           width: 100%;
-          height: 5vh;
           position: relative;
           text-align: center;
           .input {
             font-size: x-large;
-            width: 20vw;
+            margin-bottom: 1px;
           }
           .button {
+            width: 15vw;
+            height: 50px;
             font-size: x-large;
-            width: 12vw;
+            margin-bottom: 20px;
+            border-radius: 20px;
           }
         }
       }
@@ -83,6 +79,8 @@
         text-align: center;
 
         .chat {
+          overflow: auto;
+          margin-left: 5vw;
           text-align: start;
           font-size: xx-large;
           color: black;

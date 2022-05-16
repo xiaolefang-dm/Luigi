@@ -1,5 +1,7 @@
 import React from 'react';
-import { Button, Checkbox } from 'semantic-ui-react';
+import { Checkbox } from 'semantic-ui-react';
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
 import FlvJs from 'flv.js';
 import './video-panel-list.scss';
 
@@ -84,9 +86,9 @@ const VideoPanelList = ({
           <div className="name-list">
             {videoPanelComponent.name}
             {
-              <img 
-                src={videoPanelComponent.valid ? 
-                  '../../assets/common/icons/online.svg' : 
+              <img
+                src={videoPanelComponent.valid ?
+                  '../../assets/common/icons/online.svg' :
                   '../../assets/common/icons/offline.svg'}
                 width='5%' height='5%' />
             }
@@ -112,15 +114,18 @@ const VideoPanelList = ({
         {Title}
       </div>
       <div className='addStream'>
-        <label>自定义名称</label><input onChange={(e) => setCustomName(e.target.value)}></input><br />
-        <label>视频源code</label><input onChange={(e) => setStreamSource(e.target.value)}></input><br />
-        <Button onClick={() => {
-          const checkedList = VideoPanelComponentList.filter(component => component.url === streamSource)
-          if (checkedList.length > 0 && customName && streamSource)
-            window.alert("视频源已经加过了");
-          else
-            addVideo(customName, streamSource)
-        }}>添加</Button>
+        <div className='empty'></div>
+        <div className='content'>
+          <TextField size='small' label="自定义名称" onChange={(e) => setCustomName(e.target.value)}></TextField><br />
+          <TextField size='small' label="视频源code" onChange={(e) => setStreamSource(e.target.value)}></TextField><br />
+          <Button onClick={() => {
+            const checkedList = VideoPanelComponentList.filter(component => component.url === streamSource)
+            if (checkedList.length > 0 && customName && streamSource)
+              window.alert("视频源已经加过了");
+            else
+              addVideo(customName, streamSource)
+          }} color="success" variant="contained">添加</Button>
+        </div>
       </div>
       <div className='video'>{list}</div>
     </div>

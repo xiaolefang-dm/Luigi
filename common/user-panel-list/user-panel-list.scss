@@ -20,6 +20,12 @@
       width: 6.5vw;
       height: 10vw;
       position: relative;
+      .button-list {
+        left: 0.4rem;
+        position: absolute;
+        z-index: 99;
+        color:aliceblue;
+      }
       .name-list {
         background-color: black;
         bottom: 0;

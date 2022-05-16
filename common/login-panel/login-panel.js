@@ -1,7 +1,9 @@
 import "./login-panel.scss";
 
 import React, { useEffect, useState } from "react";
-import { Input, Button, Select } from "semantic-ui-react";
+import Select from '@mui/material/Select';
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
 
 const LoginPanel = ({ loginProcessing, Title, requirePasswd, requireName, requireRole, roleOptions, logo}) => {
 
@@ -15,11 +17,10 @@ const LoginPanel = ({ loginProcessing, Title, requirePasswd, requireName, requir
       <div className="title">{Title}</div>
 
       {requireName ?
-        <div>
-          <Input
-            fluid
-            placeholder="您的称呼"
-            onChange={(e, data) => setName(data.value)}
+        <div className="row">
+          <TextField
+            label="您的称呼"
+            onChange={(e, data) => setName(e.target.value)}
             value={name}
           />
         </div> : <div />
@@ -29,21 +30,21 @@ const LoginPanel = ({ loginProcessing, Title, requirePasswd, requireName, requir
         <div className="row">
           <Select
             compact
-            placeholder="您的角色"
-            options={roleOptions}
-            onChange={(e, data) => setRole(data.value)}
+            label="您的角色"
+            onChange={(e, data) => setRole(e.target.value)}
             value={name}
-          />
+          >
+            {roleOptions}
+          </Select>
         </div> : <div />
       }
 
       {requirePasswd ?
         <div className="row">
-          <Input
-            fluid
-            placeholder="口令"
-            type="password"
-            onChange={(e, data) => setPswd(data.value)}
+          <TextField
+            label="口令"
+            type={"password"}
+            onChange={(e, data) => setPswd(e.target.value)}
             value={pswd || ""}
           />
         </div> : <div />
@@ -51,6 +52,9 @@ const LoginPanel = ({ loginProcessing, Title, requirePasswd, requireName, requir
 
       <Button
         className="login-button"
+        variant="contained"
+        color="success"
+        size="large"
         onClick={() => {
           loginProcessing(name, pswd, role);
         }}

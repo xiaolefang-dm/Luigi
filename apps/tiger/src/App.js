@@ -110,7 +110,8 @@ function App() {
         setCloudCameras(cloudCamerasNew)
       }
       if (msg.users) {
-        setUsers(msg.users);
+        console.log(user.uid)
+        setUsers(msg.users.filter(_user => _user.url !== `html_browser`));
       }
       if (msg.chats) {
         setChats(msg.chats);

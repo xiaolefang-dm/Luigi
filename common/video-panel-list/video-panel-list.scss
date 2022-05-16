@@ -11,17 +11,23 @@
 
   .addStream {
     width: 99%;
-    height: 75px;
+    height: 150px;
     text-align: center;
     font-size: medium;
     overflow: auto;
     border: outset;
+    .empty {
+      height:20px
+    }
+    content: {
+      height:130px
+    };
   }
 
   .video {
     width: 14vw;
     margin-left: 1vw;
-    height: calc(99vh - 105px);
+    height: calc(99vh - 180px);
     position: relative;
     overflow-x: auto;
 
