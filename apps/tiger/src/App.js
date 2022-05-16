@@ -1,6 +1,6 @@
 import React from "react";
 import AgoraRTC from 'agora-rtc-sdk-ng';
-import { getAdminPasswdUrl, jsonHeader, loginService, agoraTokenServiceRTC } from "./config.js";
+import { getAdminPasswdUrl, jsonHeader, loginService, agoraTokenServiceRTC, changeAdminPasswdUrl, changePasswdUrl, postPackage } from "./config.js";
 import LoginPage from './pages/login-page.js';
 import MainPage from './pages/main-page.js';
 
@@ -17,6 +17,7 @@ function App() {
   const [currentSocket, setCurrrentSocket] = React.useState(null);
   const [chats, setChats] = React.useState([]);
   const [users, setUsers] = React.useState([]);
+  const [meetingOn, setMeetingOn] = React.useState(false);
 
   const handleUserPublished = async (user, mediaType) => {
     console.log('User-published ', user.uid, mediaType);
@@ -114,6 +115,14 @@ function App() {
       if (msg.chats) {
         setChats(msg.chats);
       }
+      if (msg.adminmeeting) {
+        const meeting = msg.adminmeeting;
+        if (meeting === 'true') {
+          setMeetingOn(true)
+        } else {
+          setMeetingOn(false)
+        }
+      }
     };
     setCurrrentSocket(socket);
   };
@@ -171,8 +180,42 @@ function App() {
           currentSocket.send(value);
         }
       }
+      switchMeeting={
+        () => {
+          currentSocket.send('----meeting_on----' + !meetingOn);
+        }
+      }
+      changeAdminPasswd={
+        (data) => {
+          var postPackageUsed = postPackage;
+          postPackageUsed.body = data;
+          console.log(postPackageUsed);
+          fetch(changeAdminPasswdUrl, postPackageUsed)
+            .then(res => {
+              window.alert('密码已经修改成功');
+            })
+            .catch(res => {
+              window.alert('密码修改失败');
+            })
+        }
+      }
+      changePasswd={
+        (data) => {
+          var postPackageUsed = postPackage;
+          postPackageUsed.body = data;
+          console.log(postPackageUsed);
+          fetch(changePasswdUrl, postPackageUsed)
+            .then(res => {
+              window.alert('密码已经修改成功');
+            })
+            .catch(res => {
+              window.alert('密码修改失败');
+            })
+        }
+      }
       chats={chats}
       users={users}
+      meetingOn={meetingOn}
     />
   }
   return (

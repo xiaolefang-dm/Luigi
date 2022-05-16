@@ -11,6 +11,8 @@ const cameraRemoveService = API_SERVER + '/api/camera/remove';
 const cameraListService = API_SERVER + '/api/camera/list';
 const getPasswdUrl = API_SERVER + '/api/passwd';
 const getAdminPasswdUrl = API_SERVER + '/api/adminpasswd';
+const changeAdminPasswdUrl = API_SERVER + '/api/setadminpasswd';
+const changePasswdUrl = API_SERVER + '/api/setpasswd';
 
 const jsonHeader = {
   'Accept': 'application/json',
@@ -30,6 +32,19 @@ const KDXFConfig = {
   highWaterMark: 1280
 };
 
-export {APP_ID, agoraTokenServiceRTM, agoraTokenServiceRTC, loginService,
+const postPackage = {
+  method: 'POST', // *GET, POST, PUT, DELETE, etc.
+  mode: 'cors', // no-cors, *cors, same-origin
+  cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+  credentials: 'same-origin', // include, *same-origin, omit
+  redirect: 'follow', // manual, *follow, error
+  referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, 
+  headers: jsonHeader,
+  body: '',
+}
+
+export {
+  APP_ID, agoraTokenServiceRTM, agoraTokenServiceRTC, loginService,
   logoutService, logNewService, logListService, cameraAddService, cameraRemoveService, cameraListService,
-  jsonHeader, KDXFConfig, getPasswdUrl, getAdminPasswdUrl};
+  jsonHeader, KDXFConfig, getPasswdUrl, getAdminPasswdUrl, changeAdminPasswdUrl, postPackage, changePasswdUrl
+};

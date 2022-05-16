@@ -16,7 +16,7 @@ const UserPanelList = ({ Users = [], Title = '' }) => {
     (videoPanelComponent) => {
       list.push(
         <div className={'user-panel-wrapper-list'} id={videoPanelComponent.uid}>
-          <div className="name-list">{videoPanelComponent.user}</div>
+          <div className="name-list">{decodeURIComponent(videoPanelComponent.user)}</div>
         </div>
       )
     }
