@@ -116,6 +116,9 @@ function App() {
       if (msg.chats) {
         setChats(msg.chats);
       }
+      if (msg.neworder) {
+        setUsers(msg.neworder.users);
+      }
       if (msg.adminmeeting) {
         const meeting = msg.adminmeeting;
         if (meeting === 'true') {
