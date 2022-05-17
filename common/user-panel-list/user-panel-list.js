@@ -13,16 +13,19 @@ import MenuItem from '@mui/material/MenuItem';
  * }
 */
 
-const UserPanelList = ({ Users = [], Title = '', options = [{
-  name: 'test', work: () => { console.log('test') }
-}], adminMuteFunc = (source) => {console.log(source)}, 
-adminTurnCameraFunc = (source) => {console.log(source)}, }) => {
+const UserPanelList = ({
+  Users = [],
+  Title = '',
+  options = [{
+    name: 'test', job: () => { console.log('test') }
+  }],
+  adminMuteFunc = (source) => { console.log(source) },
+  adminTurnCameraFunc = (source) => { console.log(source) },
+}) => {
   const list = [];
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const [currentComponent, setCurrentComponent] = React.useState(null);
   const open = Boolean(anchorEl);
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
   const handleClose = () => {
     setAnchorEl(null);
   };
@@ -31,19 +34,22 @@ adminTurnCameraFunc = (source) => {console.log(source)}, }) => {
       list.push(
         <div key={videoPanelComponent.uid} className={'user-panel-wrapper-list'} id={videoPanelComponent.uid}><div className="button-list">
           <Button
-            id="basic-button"
+            id={videoPanelComponent.uid}
             aria-controls={open ? 'basic-menu' : undefined}
             aria-haspopup="true"
             aria-expanded={open ? 'true' : undefined}
             color="inherit"
             variant="outlined"
             size="small"
-            onClick={handleClick}
+            onClick={event => {
+              setAnchorEl(event.currentTarget);
+              setCurrentComponent(videoPanelComponent);
+            }}
           >
             ...
           </Button>
           <Menu
-            id="basic-menu"
+            id={videoPanelComponent.uid}
             anchorEl={anchorEl}
             open={open}
             onClose={handleClose}
@@ -51,10 +57,13 @@ adminTurnCameraFunc = (source) => {console.log(source)}, }) => {
               'aria-labelledby': 'basic-button',
             }}
           >
-            {options.map(option => <MenuItem onClick={() => {
-              option.work(videoPanelComponent);
-              setAnchorEl(null);
-            }}>{option.name}</MenuItem>)}
+            {options.map(option =>
+              <MenuItem onClick={
+                () => {
+                  option.job(currentComponent);
+                  handleClose(currentComponent);
+                }
+              }>{option.name}</MenuItem>)}
           </Menu>
         </div>
           <div className="name-list">

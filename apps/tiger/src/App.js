@@ -110,7 +110,8 @@ function App() {
         setCloudCameras(cloudCamerasNew)
       }
       if (msg.users) {
-        setUsers(msg.users.filter(_user => _user.url !== `html_browser`));
+        console.log(msg.users)
+        setUsers(msg.users);
       }
       if (msg.chats) {
         setChats(msg.chats);
@@ -180,12 +181,45 @@ function App() {
           currentSocket.send(value);
         }
       }
-      optionsUsers={
+      options={
         [
           {
-            name: '静音',
-            work: videoComponent => {
-              console.log(videoComponent)
+            name: '移除用户',
+            job: (component) => {
+              if (window.confirm('确认要删除用户:' + decodeURI(component.user) + '(' + component.uid + ')'))
+                currentSocket.send('logout:' + component.uid);
+            }
+          },
+          {
+            name: '修改称呼',
+            job: (component) => {
+              let user = window.prompt("输入你的名称", '');
+              if (user && user !== component.user) {
+                currentSocket.send('modify_user_name:' + component.uid + '---' + encodeURI(user));
+              }
+            }
+          },
+          {
+            name: '上移一位',
+            job: (component) => {
+              for (let i = 0; i < users.length; i++) {
+                if ( i !== 0 && users[i] === component ) {
+                  console.log('user_orders:{"new_position":' + (i - 1).toString() + ', "old_position":' + i.toString() + '}')
+                  currentSocket.send('user_orders:{"new_position":' + (i - 1).toString() + ', "old_position":' + i.toString() + '}')
+                  break;
+                }
+              }
+            }
+          },
+          {
+            name: '下移一位',
+            job: (component) => {
+              for (let i = 0; i < users.length; i++) {
+                if ( i !== users.length - 1 && users[i] === component ) {
+                  currentSocket.send('user_orders:{"new_position":' + (i + 1).toString() + ', "old_position":' + i.toString() + '}')
+                  break;
+                }
+              }
             }
           }
         ]
