@@ -13,38 +13,41 @@ function App() {
 
   const [cloudCameras, setCloudCameras] = React.useState([]);
   const [user, setUser] = React.useState({});
-  const [logged, setLogged] = React.useState(false);
   const [currentSocket, setCurrrentSocket] = React.useState(null);
   const [chats, setChats] = React.useState([]);
   const [users, setUsers] = React.useState([]);
   const [meetingOn, setMeetingOn] = React.useState(false);
+  const [peers, setPeers] = React.useState([]);
 
-  const handleUserPublished = async (user, mediaType) => {
-    console.log('User-published ', user.uid, mediaType);
-    await agoraRTC.subscribe(user, mediaType);
-    const peer = remotePeers.filter((r) => r.uid === user.uid);
-    console.log(remotePeers)
-    if (mediaType === 'video' && !peer[0].video_playing) {
-      const remoteVideoTrack = user.videoTrack;
+  const handleUserPublished = async (user1, mediaType) => {
+    console.log('User-published ', user1.uid, mediaType);
+    await agoraRTC.subscribe(user1, mediaType);
+    const peer = peers.filter((r) => r.uid === user1.uid);
+    console.log(peer)
+    if (peer.length > 0) {
+      if (mediaType === 'video' && !peer[0].video_playing) {
+        const remoteVideoTrack = user1.videoTrack;
 
-      remoteVideoTrack.play(user.uid);
-      peer[0].video_playing = true;
-    }
-    if (mediaType === 'audio' && !peer[0].audio_playing) {
-      const remoteAudioTrack = user.audioTrack;
-      remoteAudioTrack.play();
-      peer[0].audio_playing = true;
+        remoteVideoTrack.play(`${user1.uid}`);
+        peer[0].video_playing = true;
+      }
+      if (mediaType === 'audio' && !peer[0].audio_playing) {
+        const remoteAudioTrack = user1.audioTrack;
+        remoteAudioTrack.play();
+        peer[0].audio_playing = true;
+      }
     }
   };
 
-  const handleUserJoined = (user) => {
-    console.log('User-joined ', user.uid, remotePeers);
+  const handleUserJoined = (user1) => {
+    console.log('User-joined ', user1.uid, user);
     //agoraRTC.publish([localAudioTrack, localVideoTrack]);
+    const currentPeers = peers;
     if (users.filter((r) => r.uid === user.uid).length === 0) {
       const currentUser = users.filter(user1 => user1.uid === user.uid.toString())
-      user.name = currentUser.length > 0 ? currentUser[0].user : '未知';
-      users.push(user);
-      setUsers(users);
+      user1.name = currentUser.length > 0 ? currentUser[0].user : '未知';
+      peers.push(user1);
+      setPeers(peers);
     }
   };
 
@@ -67,14 +70,14 @@ function App() {
     }
   };
 
-  const initAgora = async () => {
+  const initAgora = () => {
     agoraRTC = AgoraRTC.createClient({ mode: 'live', codec: 'h264' });
     agoraRTC.setClientRole("host");
     agoraRTC.on('user-published', handleUserPublished);
     agoraRTC.on('user-joined', handleUserJoined);
     agoraRTC.on('user-unpublished', handleUserUnpublished);
     agoraRTC.on('user-left', handleUserLeft);
-    if (logged)
+    if (user.uid && user.name && user.appId && user.channelName)
       joinRTCChannel();
   };
 
@@ -82,10 +85,10 @@ function App() {
     initAgora();
   }, [user]);
 
-  const joinRTCChannel = async () => {
+  const joinRTCChannel = () => {
     try {
+      console.log(user)
       const uid1 = agoraRTC.join(user.appId, user.channelName, user.token, user.uid);
-      console.log(uid1);
     } catch (e) {
       throw new Error('Join channel failed');
     }
@@ -141,10 +144,10 @@ function App() {
         appId: response.appId,
         channelName: response.channelName,
         uid: response.uid,
+        token: response.token,
       }
     );
     socketProcessing()
-    setLogged(true);
 
   }
 
@@ -165,7 +168,7 @@ function App() {
     else
       window.alert('口令错误')
   }
-  if (logged) {
+  if (user.uid && user.name && user.appId && user.channelName) {
     return <MainPage
       uid={user.uid}
       cloudCameras={cloudCameras}
@@ -206,7 +209,7 @@ function App() {
             name: '上移一位',
             job: (component) => {
               for (let i = 0; i < users.length; i++) {
-                if ( i !== 0 && users[i] === component ) {
+                if (i !== 0 && users[i] === component) {
                   console.log('user_orders:{"new_position":' + (i - 1).toString() + ', "old_position":' + i.toString() + '}')
                   currentSocket.send('user_orders:{"new_position":' + (i - 1).toString() + ', "old_position":' + i.toString() + '}')
                   break;
@@ -218,7 +221,7 @@ function App() {
             name: '下移一位',
             job: (component) => {
               for (let i = 0; i < users.length; i++) {
-                if ( i !== users.length - 1 && users[i] === component ) {
+                if (i !== users.length - 1 && users[i] === component) {
                   currentSocket.send('user_orders:{"new_position":' + (i + 1).toString() + ', "old_position":' + i.toString() + '}')
                   break;
                 }
