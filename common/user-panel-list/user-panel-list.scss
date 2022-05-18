@@ -24,7 +24,7 @@
         left: 0.4rem;
         position: absolute;
         z-index: 99;
-        color:aliceblue;
+        color: aliceblue;
       }
       .name-list {
         background-color: black;
@@ -36,16 +36,17 @@
         .icon {
           margin-right: 5px;
         }
-
-        &.mute:after {
-          background: url(../../assets/common/icons/microphone-off-filled.svg) center no-repeat black;
-          background-size: 72%;
-          content: "";
-          height: 100%;
-          padding-right: 0.5rem;
-          position: absolute;
-          width: 1.3rem;
-        }
+      }
+      &.expand {
+        background-color: rgba(0, 0, 0, 0.9);
+        height: 100%;
+        left: 0;
+        margin-left: 0 !important;
+        padding: 20px;
+        position: absolute;
+        top: 0;
+        width: 100%;
+        z-index: 300 !important;
       }
     }
   }

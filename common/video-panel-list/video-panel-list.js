@@ -24,6 +24,7 @@ const VideoPanelList = ({
   selectVideo = (v) => { console.log(v) },
   addVideo = (v) => { console.log('test') },
   deleteStream = (v) => { console.log(v) },
+  pushStream = (v) => {console.log(v)},
   bigScreenVideoComonentId = ''
 }) => {
 
@@ -104,6 +105,14 @@ const VideoPanelList = ({
             if (window.confirm("是否确认删除" + videoPanelComponent.name + "?"))
               deleteStream(value);
           }}>点击删除</div>
+          <div className='push-list' onClick={() => {
+            if (videoPanelComponent.valid && videoPanelComponent.online) {
+              let value = 'fullscreen---stream---' + videoPanelComponent.url;
+              pushStream(value);
+            } else {
+              window.alert('视频没有在线/选择')
+            }
+          }}>点击推送</div>
         </div >
       )
     }

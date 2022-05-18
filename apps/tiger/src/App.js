@@ -187,6 +187,11 @@ function App() {
           currentSocket.send(value);
         }
       }
+      pushStreamFunc={
+        (value) => {
+          currentSocket.send(value);
+        }
+      }
       options={
         [
           {
@@ -226,6 +231,13 @@ function App() {
                   break;
                 }
               }
+            }
+          },
+          {
+            name: '推送用户',
+            job: (component) => {
+              const value =  'fullscreen---user---rtc-user-' + component.uid;
+              currentSocket.send(value);
             }
           }
         ]

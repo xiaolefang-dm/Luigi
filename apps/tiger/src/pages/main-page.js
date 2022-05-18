@@ -16,6 +16,7 @@ const MainPage = ({ uid, cloudCameras, selectVideoFunc = () => { },
   changeAdminPasswd = () => { },
   adminMuteFunc = () => { },
   adminTurnCameraFunc = () => { },
+  pushStreamFunc = () => { },
   users = [],
   chats = [],
   options = [],
@@ -29,6 +30,7 @@ const MainPage = ({ uid, cloudCameras, selectVideoFunc = () => { },
         selectVideo={selectVideoFunc}
         addVideo={addVideoFunc}
         deleteStream={deleteVideoFunc}
+        pushStream={pushStreamFunc}
         bigScreenVideoComonentId={'bigScreen'}
       />
     </div>
