@@ -9,17 +9,16 @@
     overflow: auto;
     width: 100%;
     height: calc(100vh - 30px);
-    display: flex;
-    flex-wrap: wrap;
     .user-panel-wrapper-list {
-      margin-bottom: 1vw;
-      margin-right: 1vw;
+      margin-right: 2px;
+      margin-bottom: 2px;
       background: url(../../assets/common/icons/fireman.svg) no-repeat center #303236;
       background-size: 20%;
       border-radius: 2px;
-      width: 6.5vw;
-      height: 10vw;
+      width: calc(9vw - 2px);
+      height: 16vw;
       position: relative;
+      display: inline-flex;
       .button-list {
         left: 0.4rem;
         position: absolute;
