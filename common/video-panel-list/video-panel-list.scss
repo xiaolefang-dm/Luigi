@@ -25,11 +25,12 @@
   }
 
   .video {
-    width: 14vw;
+    width: 100%;
     margin-left: 1vw;
     height: calc(99vh - 180px);
     position: relative;
     overflow-x: auto;
+    text-align: center;
 
     .video-panel-wrapper-list {
       margin-top: 1%;
@@ -37,8 +38,9 @@
       background-size: 20%;
       border-radius: 5px;
       position: relative;
-      width: 12vw;
-      height: 7vw;
+      height: 200px;
+      width: 360px;
+      display: inline-table;
 
       .button-list {
         top: 0;

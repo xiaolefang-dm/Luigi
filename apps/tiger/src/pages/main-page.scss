@@ -5,7 +5,7 @@
   display: flex;
 
   .VideoList {
-    width: 15vw;
+    width: 20vw;
     height: 95vh;
   }
 
@@ -22,19 +22,19 @@
       text-align: center;
     }
     .video {
-      width: 66vw;
+      width: 60vw;
       height: calc(65vh - 50px);
     }
 
     .MessageControlPanel {
-      width: 66vw;
+      width: 60;
       height: 31vh;
       display: flex;
       text-align: start;
       font-size: larger;
 
       .ControlPanel {
-        width: 22vw;
+        width: 20vw;
         height: 31vh;
         background-color: beige;
         margin-top: 2vh;
@@ -68,7 +68,7 @@
       }
 
       .MessagePanel {
-        width: 44vw;
+        width: 40vw;
         height: 31vh;
         margin-top: 2vh;
         min-height: calc(32vh - 50px);
@@ -90,7 +90,7 @@
   }
 
   .UserList {
-    width: 15vw;
+    width: 20vw;
     height: 95vh;
   }
 }
