@@ -4,6 +4,9 @@ import { VideoPanel } from '../../../../common/video-panel/video-panel.js';
 import { VideoPanelList } from '../../../../common/video-panel-list/video-panel-list.js';
 import { UserPanelList } from '../../../../common/user-panel-list/user-panel-list';
 import Button from '@mui/material/Button';
+import Stack from '@mui/material/Stack';
+import Box from '@mui/material/Box';
+import { Divider, Grid, Header, Icon, Item, Table } from 'semantic-ui-react'
 import TextField from '@mui/material/TextField';
 
 var adminPasswd = '';
@@ -38,21 +41,39 @@ const MainPage = ({ uid, cloudCameras, selectVideoFunc = () => { },
       <div className='video'><VideoPanel name='' flvVideoId='bigScreen' /></div>
       <div className='MessageControlPanel'>
         <div className='ControlPanel'>
-          <h1>会议控制</h1>
-          <Button className={'enableMeeting'} onClick={() => { switchMeeting() }} color={meetingOn ? "success" : "error"}
-            variant="contained">
-            {meetingOn ? '关闭会议' : '启动会议'}
-          </Button>
-          <div className='pswdSetting'>
-            <TextField className='input' size='massive' label='新管理员密码' onChange={(e, info) => adminPasswd = e.target.value} />
-            <Button variant="contained" className='button' onClick={() => changeAdminPasswd(JSON.stringify({ adminPasswd: adminPasswd }))} color="success">修改管理员密码</Button>
-            <TextField className='input' size='massive' label='新会议密码' onChange={(e, info) => passwd = e.target.value} />
-            <Button variant="contained" className='button' onClick={() => changePasswd(JSON.stringify({ adminPasswd: passwd }))}
-              color="success">修改普通用户密码</Button>
-          </div>
+          <Box sx={{ width: '100%' }}>
+            <Stack spacing={2}>
+              <Item>
+                <Header as='h3'>
+                  会议控制
+                </Header>
+              </Item>
+              <Item>
+                <Button className={'enableMeeting'} onClick={() => { switchMeeting() }} color={meetingOn ? "success" : "error"}
+                  variant="contained">
+                  {meetingOn ? '关闭会议' : '启动会议'}
+                </Button>
+              </Item>
+              <Item>
+
+                <TextField className='input' size='massive' label='设置管理成员密码' onChange={(e, info) => adminPasswd = e.target.value} />
+                <Button variant="contained" className='button' onClick={() => changeAdminPasswd(JSON.stringify({ adminPasswd: adminPasswd }))} color="success">修改密码</Button>
+              </Item>
+              <Item>
+                <TextField className='input' size='massive' label='设置会议成员密码' onChange={(e, info) => passwd = e.target.value} />
+                <Button variant="contained" className='button' onClick={() => changePasswd(JSON.stringify({ adminPasswd: passwd }))}
+                  color="success">修改密码</Button>
+              </Item>
+            </Stack>
+          </Box>
         </div>
         <div className='MessagePanel'>
-          <h1>聊天记录</h1>
+          <Divider horizontal>
+            <Header as='h4'>
+              <Icon name='bar chart' />
+              聊天记录
+            </Header>
+          </Divider>
           {chats.map(chat => <p className='chat'>{chat}</p>)}
         </div>
       </div>
@@ -61,7 +82,7 @@ const MainPage = ({ uid, cloudCameras, selectVideoFunc = () => { },
       <UserPanelList
         Title={'在线用户'}
         Users={users}
-        adminMuteFunc={adminMuteFunc} 
+        adminMuteFunc={adminMuteFunc}
         adminTurnCameraFunc={adminTurnCameraFunc}
         options={options}
       />
