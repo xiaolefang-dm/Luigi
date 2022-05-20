@@ -19,6 +19,10 @@ function App() {
   const [meetingOn, setMeetingOn] = React.useState(false);
   const [peers, setPeers] = React.useState([]);
 
+  const close = () => {
+    setUser({});
+  }
+
   const handleUserPublished = async (user1, mediaType) => {
     console.log('User-published ', user1.uid, mediaType);
     await agoraRTC.subscribe(user1, mediaType);
@@ -277,6 +281,7 @@ function App() {
       }
       chats={chats}
       users={users}
+      close={close}
       meetingOn={meetingOn}
       adminMuteFunc={user => {
         if (meetingOn)

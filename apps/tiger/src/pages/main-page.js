@@ -9,6 +9,12 @@ import Box from '@mui/material/Box';
 import { Divider, Grid, Header, Icon, Item, Table } from 'semantic-ui-react'
 import TextField from '@mui/material/TextField';
 
+const scrollToBottom = (id) => {
+  const element = document.getElementById(id);
+  if (element)
+    element.scrollTop = element.scrollHeight;
+}
+
 var adminPasswd = '';
 var passwd = '';
 const MainPage = ({ uid, cloudCameras, selectVideoFunc = () => { },
@@ -20,11 +26,17 @@ const MainPage = ({ uid, cloudCameras, selectVideoFunc = () => { },
   adminMuteFunc = () => { },
   adminTurnCameraFunc = () => { },
   pushStreamFunc = () => { },
+  close = () => { },
   users = [],
   chats = [],
   options = [],
   meetingOn = false }) => {
-  console.log(users)
+
+
+  React.useEffect(() => {
+    scrollToBottom('chats');
+  }, [chats])
+
   return <div className='MainPage'>
     <div className='VideoList'>
       <VideoPanelList
@@ -74,18 +86,28 @@ const MainPage = ({ uid, cloudCameras, selectVideoFunc = () => { },
               聊天记录
             </Header>
           </Divider>
-          {chats.map(chat => <p className='chat'>{chat}</p>)}
+          <div id='chats'>
+            {chats.map((chat, index) => <p
+              key={`chat-id-${index}`}
+              id={index === chats.length - 1 ? `last` : `chat-id-${index}`}
+              className='chat'>{chat}</p>)}
+          </div>
         </div>
       </div>
     </div>
-    <div className='UserList'>
-      <UserPanelList
-        Title={'在线用户'}
-        Users={users}
-        adminMuteFunc={adminMuteFunc}
-        adminTurnCameraFunc={adminTurnCameraFunc}
-        options={options}
-      />
+    <div className='UserCloseList'>
+      <div className='CloseIcon'>
+        <Button variant="contained" onClick={() => close()}>退出</Button>
+      </div>
+      <div className='UserList'>
+        <UserPanelList
+          Title={`在线用户(共${users.length}人在线)`}
+          Users={users}
+          adminMuteFunc={adminMuteFunc}
+          adminTurnCameraFunc={adminTurnCameraFunc}
+          options={options}
+        />
+      </div>
     </div>
   </div>
 }

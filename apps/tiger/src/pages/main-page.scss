@@ -90,8 +90,15 @@
     }
   }
 
-  .UserList {
-    width: 20vw;
-    height: 95vh;
+  .UserCloseList {
+    .CloseIcon {
+      left: calc(100% - 60px);  
+      position:fixed;
+      font-size: small;
+    }
+    .UserList {
+      width: 20vw;
+      height: calc(95vh - 10px)
+    }
   }
 }
