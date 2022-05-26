@@ -243,6 +243,13 @@ function App() {
               const value =  'fullscreen---user---rtc-user-' + component.uid;
               currentSocket.send(value);
             }
+          },
+          {
+            name: '取消推送',
+            job: (component) => {
+              const value =  'unfullscreen---user---rtc-user-' + component.uid;
+              currentSocket.send(value);
+            }
           }
         ]
       }

@@ -75,6 +75,17 @@
       .push-list {
         background-color: black;
         top: 0;
+        right: 40%;
+        color: white;
+        padding-left: 0.4rem;
+        padding-right: 0.4rem;
+        position: absolute;
+        z-index: 99;
+      }
+
+      .unpush-list {
+        background-color: black;
+        top: 0;
         right: 0;
         color: white;
         padding-left: 0.4rem;

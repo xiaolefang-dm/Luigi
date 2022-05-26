@@ -123,6 +123,14 @@ const VideoPanelList = ({
               window.alert('视频没有在线/选择')
             }
           }}>点击推送</div>
+          <div className='unpush-list' onClick={() => {
+            if (videoPanelComponent.valid && videoPanelComponent.online) {
+              let value = 'unfullscreen---stream---' + videoPanelComponent.url;
+              pushStream(value);
+            } else {
+              window.alert('视频没有在线/选择')
+            }
+          }}>取消推送</div>
         </div >
       )
     }
