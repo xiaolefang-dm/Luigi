@@ -238,6 +238,17 @@ function App() {
             }
           },
           {
+            name: '置顶用户',
+            job: (component) => {
+              for (let i = 0; i < users.length; i++) {
+                if (i !== 0 && users[i] === component) {
+                  currentSocket.send('user_orders:{"new_position":0' + ', "old_position":' + i.toString() + '}')
+                  break;
+                }
+              }
+            }
+          },
+          {
             name: '推送用户',
             job: (component) => {
               const value =  'fullscreen---user---rtc-user-' + component.uid;
