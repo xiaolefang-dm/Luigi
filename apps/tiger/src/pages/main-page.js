@@ -25,6 +25,7 @@ const MainPage = ({ uid, cloudCameras, selectVideoFunc = () => { },
   changeAdminPasswd = () => { },
   adminMuteFunc = () => { },
   adminTurnCameraFunc = () => { },
+  changeSpeakerOffFunc = () => {},
   pushStreamFunc = () => { },
   close = () => { },
   users = [],
@@ -105,6 +106,7 @@ const MainPage = ({ uid, cloudCameras, selectVideoFunc = () => { },
           Users={users}
           adminMuteFunc={adminMuteFunc}
           adminTurnCameraFunc={adminTurnCameraFunc}
+          changeSpeakerOff={changeSpeakerOffFunc}
           options={options}
         />
       </div>

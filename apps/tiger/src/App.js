@@ -251,14 +251,14 @@ function App() {
           {
             name: '推送用户',
             job: (component) => {
-              const value =  'fullscreen---user---rtc-user-' + component.uid;
+              const value = 'fullscreen---user---rtc-user-' + component.uid;
               currentSocket.send(value);
             }
           },
           {
             name: '取消推送',
             job: (component) => {
-              const value =  'unfullscreen---user---rtc-user-' + component.uid;
+              const value = 'unfullscreen---user---rtc-user-' + component.uid;
               currentSocket.send(value);
             }
           }
@@ -312,6 +312,9 @@ function App() {
           currentSocket.send(`adminwork---${user.uid}`)
         else
           window.alert('会议尚未开始');
+      }}
+      changeSpeakerOffFunc={user => {
+        currentSocket.send(`speakerOff---${user.uid}---${!user.speakerOff}`);
       }}
     />
   }

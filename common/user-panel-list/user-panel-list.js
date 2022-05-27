@@ -21,6 +21,7 @@ const UserPanelList = ({
   }],
   adminMuteFunc = (source) => { console.log(source) },
   adminTurnCameraFunc = (source) => { console.log(source) },
+  changeSpeakerOff = (source) => {console.log(source)},
 }) => {
   const list = [];
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -96,6 +97,17 @@ const UserPanelList = ({
                     '../../assets/common/icons/camera1.svg' :
                     '../../assets/common/icons/camera1-off.svg'}
                   width='25rem' height='25rem' onClick={() => adminTurnCameraFunc(videoPanelComponent)} />
+              }
+            </div>
+            <div className='icon'>
+              {
+                <img width='25rem' height='25rem'
+                  onClick={
+                    () => {changeSpeakerOff(videoPanelComponent)}
+                  }
+                  src={videoPanelComponent.speakerOff ?
+                    '../../assets/common/icons/speaker-off.svg' :
+                    '../../assets/common/icons/speaker-on.svg'} />
               }
             </div>
             <div className='icon'>
