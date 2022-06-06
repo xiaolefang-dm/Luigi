@@ -84,7 +84,7 @@ const MainPage = ({ uid, cloudCameras, selectVideoFunc = () => { },
           <Divider horizontal>
             <Header as='h4'>
               <Icon name='bar chart' />
-              聊天记录
+              会议记录
             </Header>
           </Divider>
           <div id='chats'>
