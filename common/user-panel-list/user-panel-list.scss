@@ -1,6 +1,7 @@
 .whole-user-list {
   width: 100%;
   height: 100%;
+  overflow: auto;
   .title {
     text-align: center;
     height: 30px;
@@ -8,7 +9,7 @@
   .user {
     overflow: auto;
     width: 100%;
-    height: calc(98vh - 30px);
+    min-height: 20px;
     .user-panel-wrapper-list {
       margin-right: 2px;
       margin-bottom: 2px;
