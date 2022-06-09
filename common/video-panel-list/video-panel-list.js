@@ -19,7 +19,9 @@ const options = [
   { key: 'hide', icon: 'hide', text: 'Hide Post', value: 'hide' },
 ]
 
-var flvPlayer = null;
+var flvPlayer1 = null;
+
+var flvPlayers = [];
 
 const VideoPanelList = ({
   VideoPanelComponentList = [], Title = '',
@@ -37,9 +39,18 @@ const VideoPanelList = ({
   const [bigScreenUrl, setBigScreenUrl] = React.useState('');
   const [displayUnvalidList, setDisplayUnvalidList] = React.useState(false);
 
+  flvPlayers.map(flvPlayer2 => {
+    flvPlayer2.pause();
+    flvPlayer2.unload();
+    flvPlayer2.detachMediaElement();
+    flvPlayer2.destroy();
+    flvPlayer2 = null;
+  })
+  flvPlayers = [];
   VideoPanelComponentList.map(
     (videoPanelComponent) => {
-      if (videoPanelComponent.valid && !videoPanelComponent.play)
+      console.log(videoPanelComponent);
+      if (videoPanelComponent.valid)
         setTimeout(() => {
           let videoElement = document.getElementById(videoPanelComponent.url + '-video');
           let flvPlayer = FlvJs.createPlayer({ type: 'flv', url: `https://xhd.deepmirror.com.cn:8088/live/${videoPanelComponent.url}.flv` }, {
@@ -47,10 +58,27 @@ const VideoPanelList = ({
             fixAudioTimestampGap: false,
             isLive: true
           });
+          flvPlayer.detachMediaElement();
+          flvPlayer.unload();
+          flvPlayer.on(FlvJs.ERROR, (err, detail) => {
+            console.warn('Flv Player error', err, detail);
+            flvPlayer.detachMediaElement();
+            flvPlayer.unload();
+            // Reset the player and retry.
+            setTimeout(() => {
+              console.warn('Flv Player reset');
+              flvPlayer.attachMediaElement(videoElement);
+              flvPlayer.load();
+              flvPlayer.play();
+              flvPlayers.push(flvPlayer);
+              console.log(flvPlayers);
+            }, 200);
+          });
           flvPlayer.attachMediaElement(videoElement);
           flvPlayer.load();
           flvPlayer.play();
-          videoPanelComponent.play = true;
+          flvPlayers.push(flvPlayer);
+          console.log(flvPlayers);
         }, 200);
       const item = <div key={videoPanelComponent.url} className={'video-panel-wrapper-list'} id={videoPanelComponent.url}>
         {
@@ -58,32 +86,32 @@ const VideoPanelList = ({
             if (videoPanelComponent.valid && bigScreenVideoComonentId) {
               if (bigScreenUrl !== videoPanelComponent.url)
                 setTimeout(() => {
-                  if (flvPlayer) {
-                    flvPlayer.detachMediaElement();
-                    flvPlayer.unload();
+                  if (flvPlayer1) {
+                    flvPlayer1.detachMediaElement();
+                    flvPlayer1.unload();
                   }
-                  let videoElement = document.getElementById(bigScreenVideoComonentId);
-                  flvPlayer = FlvJs.createPlayer({ type: 'flv', url: `https://xhd.deepmirror.com.cn:8088/live/${videoPanelComponent.url}.flv` }, {
+                  let videoElement1 = document.getElementById(bigScreenVideoComonentId);
+                  flvPlayer1 = FlvJs.createPlayer({ type: 'flv', url: `https://xhd.deepmirror.com.cn:8088/live/${videoPanelComponent.url}.flv` }, {
                     enableStashBuffer: false,
                     fixAudioTimestampGap: false,
                     isLive: true
                   });
-                  flvPlayer.on('error', (err, detail) => {
+                  flvPlayer1.on('error', (err, detail) => {
                     console.warn('Flv Player error', err, detail);
-                    flvPlayer.detachMediaElement();
-                    flvPlayer.unload();
+                    flvPlayer1.detachMediaElement();
+                    flvPlayer1.unload();
                     // Reset the player and retry.
                     setTimeout(() => {
                       console.warn('Flv Player reset');
-                      flvPlayer.attachMediaElement(videoElement);
-                      flvPlayer.load();
-                      flvPlayer.play();
+                      flvPlayer1.attachMediaElement(videoElement1);
+                      flvPlayer1.load();
+                      flvPlayer1.play();
                     }, 200);
                     setBigScreenUrl(videoPanelComponent.url)
                   });
-                  flvPlayer.attachMediaElement(videoElement);
-                  flvPlayer.load();
-                  flvPlayer.play();
+                  flvPlayer1.attachMediaElement(videoElement1);
+                  flvPlayer1.load();
+                  flvPlayer1.play();
                   setBigScreenUrl(videoPanelComponent.url)
                 }, 200);
             } else
@@ -134,6 +162,7 @@ const VideoPanelList = ({
         unvalidList.push(item);
     }
   )
+  console.log(flvPlayers);
   return (
     <div className='whole-list'>
       <div className='title'>
