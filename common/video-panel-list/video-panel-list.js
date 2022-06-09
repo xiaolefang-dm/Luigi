@@ -49,7 +49,6 @@ const VideoPanelList = ({
   flvPlayers = [];
   VideoPanelComponentList.map(
     (videoPanelComponent) => {
-      console.log(videoPanelComponent);
       if (videoPanelComponent.valid)
         setTimeout(() => {
           let videoElement = document.getElementById(videoPanelComponent.url + '-video');
@@ -71,14 +70,12 @@ const VideoPanelList = ({
               flvPlayer.load();
               flvPlayer.play();
               flvPlayers.push(flvPlayer);
-              console.log(flvPlayers);
             }, 200);
           });
           flvPlayer.attachMediaElement(videoElement);
           flvPlayer.load();
           flvPlayer.play();
           flvPlayers.push(flvPlayer);
-          console.log(flvPlayers);
         }, 200);
       const item = <div key={videoPanelComponent.url} className={'video-panel-wrapper-list'} id={videoPanelComponent.url}>
         {
@@ -162,7 +159,7 @@ const VideoPanelList = ({
         unvalidList.push(item);
     }
   )
-  console.log(flvPlayers);
+  
   return (
     <div className='whole-list'>
       <div className='title'>
