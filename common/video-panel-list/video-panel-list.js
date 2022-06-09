@@ -42,19 +42,10 @@ const VideoPanelList = ({
       if (videoPanelComponent.valid && !videoPanelComponent.play)
         setTimeout(() => {
           let videoElement = document.getElementById(videoPanelComponent.url + '-video');
-          let flvPlayer = FlvJs.createPlayer({ type: 'flv', url: `https://xhd.deepmirror.com.cn:8088/live/${videoPanelComponent.url}.flv` });
-          flvPlayer.on('error', (err, detail) => {
-            console.warn('Flv Player error', err, detail);
-            flvPlayer.detachMediaElement();
-            flvPlayer.unload();
-            // Reset the player and retry.
-            setTimeout(() => {
-              console.warn('Flv Player reset');
-              flvPlayer.attachMediaElement(videoElement);
-              flvPlayer.load();
-              flvPlayer.play();
-              videoPanelComponent.play = true;
-            }, 200);
+          let flvPlayer = FlvJs.createPlayer({ type: 'flv', url: `https://xhd.deepmirror.com.cn:8088/live/${videoPanelComponent.url}.flv` }, {
+            enableStashBuffer: false,
+            fixAudioTimestampGap: false,
+            isLive: true
           });
           flvPlayer.attachMediaElement(videoElement);
           flvPlayer.load();
@@ -72,7 +63,11 @@ const VideoPanelList = ({
                     flvPlayer.unload();
                   }
                   let videoElement = document.getElementById(bigScreenVideoComonentId);
-                  flvPlayer = FlvJs.createPlayer({ type: 'flv', url: `https://xhd.deepmirror.com.cn:8088/live/${videoPanelComponent.url}.flv` });
+                  flvPlayer = FlvJs.createPlayer({ type: 'flv', url: `https://xhd.deepmirror.com.cn:8088/live/${videoPanelComponent.url}.flv` }, {
+                    enableStashBuffer: false,
+                    fixAudioTimestampGap: false,
+                    isLive: true
+                  });
                   flvPlayer.on('error', (err, detail) => {
                     console.warn('Flv Player error', err, detail);
                     flvPlayer.detachMediaElement();
@@ -160,7 +155,7 @@ const VideoPanelList = ({
       </div>
       <div>在线视频</div>
       <div className='video'>{validList}</div>
-      <div><Checkbox label={'离线视频'} onChange={(e, data) => {setDisplayUnvalidList(data.checked)}}></Checkbox></div>
+      <div><Checkbox label={'离线视频'} onChange={(e, data) => { setDisplayUnvalidList(data.checked) }}></Checkbox></div>
       <div className='video'>{displayUnvalidList ? unvalidList : []}</div>
     </div>
   );
