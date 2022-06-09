@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "webpack --mode development",
     "prod": "webpack --mode production",
-    "bootstrap": "cd ../../ && yarn bootstrap && cd apps/tiger && yarn ",
+    "bootstrap": "cd ../../ && yarn bootstrap && cd apps/tiger && yarn && cp update_node_modules/flv.js ../../node_modules/flv.js/dist/flv.js",
     "start": "webpack serve --mode development"
   },
   "dependencies": {
