@@ -1,0 +1,223 @@
+syntax = "proto3";
+
+package dm.proto.gamma;
+
+option java_multiple_files = true;
+option java_package = "com.dm.proto.gamma";
+
+import "proto/internal/common/area_info.proto";
+import "proto/api/math/vec.proto";
+
+message CreateWebAppRequest {
+  // Unique id.
+  string uid = 1;
+
+  // Given name by users.
+  string app_name = 2;
+
+  // Map Engine applied in web app.
+  message Map {
+    // Base map's mode, some map visualizer engine supportter.  
+    enum BaseMode {
+      DECKGL = 0;
+      GAODE = 1;
+      BAIDU = 2;
+      // Game view map??
+    }
+    BaseMode base_mode = 1;
+
+    message MapInitialState {
+      // Longitude and latitude in WGS84 (EPSG4326).
+      double longitude = 1;
+      double latitude = 2;
+
+      // Bearing angle of the view (in degree 0 - 360).
+      double bearing = 3;
+
+      // Pitch angle of the view (in degree 0 - 90).
+      double pitch = 4;
+
+      // Initial zoom level.
+      double zoom = 5;
+
+      // Initial map style.
+      string style = 6;
+
+      // Map token or key (if needed).
+      string key = 7;
+
+      // Others...
+    }
+  }
+  Map map = 3;
+
+  // Data loaded over the map in app.
+  message MapData {
+    // Given name. 
+    string name = 1;
+
+    // Area infomation.
+    dm.internal.proto.common.CollectionAreaInfo area_info = 2;
+
+    // Data.
+    oneof Data {
+      PointcloudData pointcloud_data = 3;
+      MeshData mesh_data =4;
+      OsmData osm_data = 5;
+      OtherData other_data = 6;
+    }
+
+    // Pointcloud data.
+    message PointcloudData {
+      // Service type.
+      enum Type {
+        // Cesium tile3d format.
+        CESIUM = 0;
+        
+        // Based on https://github.com/deepmirrorinc/CoreApis/blob/89e3258a94c7b565c35e5cd2dba57871af82148a/proto/internal/toolkit/toolkit_service.proto#L566
+        DM_PCD_SERVICE = 1;
+
+        // Based on https://github.com/deepmirrorinc/CoreApis/blob/89e3258a94c7b565c35e5cd2dba57871af82148a/proto/internal/toolkit/toolkit_service.proto#L30
+        // and https://github.com/deepmirrorinc/CoreApis/blob/89e3258a94c7b565c35e5cd2dba57871af82148a/proto/internal/toolkit/data_entry.proto#L121
+        DM_SESSION = 2;
+
+        // The url of ply file.
+        PLY = 3;
+
+        // The url of las file.
+        LAS = 4;
+      }
+      Type type = 1;
+
+      // Service link.
+      repeated string service_link = 2;
+
+      // Extra infomations.
+      map<string, string> extra = 3;
+    }
+
+    message MeshData {
+      // Service type.
+      enum Type {
+        // Cesium tile3d format. Not finish yet.
+        CESUIM = 0;
+
+        // Based on https://github.com/deepmirrorinc/MeshObjectProcessing/blob/master/scripts/python/mesh_s2_service_test.py
+        // Todo(HaoguangMin) setup service to Gamma 
+        DM_MESH_SERVICE = 1;
+
+        // The url of glb file.
+        GLB = 2;
+      }
+      Type type = 1;
+
+      // Service link.
+      repeated string service_link = 2;
+
+      // Extra infomations.
+      map<string, string> extra = 3;
+    }
+
+    // HD osm road data.
+    message OsmData {
+      // Service osm geojson link.
+      repeated string service_link = 1;
+      
+      // Extra infomations.
+      map<string, string> extra = 2;
+    }
+
+    // Other data.
+    message OtherData {
+      enum Type {
+        // geojson format.
+        GEOJSON = 0;
+
+        // tiff format.
+        TIFF = 1;
+
+        // jpeg/png format.
+        PIC = 2;
+      }
+      Type type = 1;
+
+      // Service link.
+      repeated string service_link = 2;
+      
+      // Extra infomations.
+      map<string, string> extra = 3;
+    }
+  }
+  repeated MapData map_data = 4;
+
+  // Functions of the web app.
+  // To be added.
+  message Function {
+    // Function's name.
+    string name = 1;
+
+    // Functions definination.
+    message Function {
+      oneof FunctionType {
+        ValueSensor value_sensor = 1;
+        CameraSensor camera_sensor = 2;
+      }
+
+      // Sensor with value feeded back, e.g. temperature, gps ...
+      message ValueSensor {
+        // Sensor value.
+        message SensorValue {
+          // Sensor's position on the map (x, y, z).
+          dm.api.proto.math.Vec3d position = 1;
+
+          // Sensor's digital values in map format.
+          map<string, double> digital_values = 2;
+
+          // Sensor's other values in map format.
+          map<string, string> non_digital_values = 3;
+
+          // Timestamp (ms).
+          double timestamp_ms = 4;
+        }
+        repeated SensorValue sensor_values = 1;
+
+        // Extra sensor information.
+        map<string, string> extra = 2;
+      }
+
+      // Camera Sensor.
+      message CameraSensor {
+        message SensorValue {
+          // Sensor's position on the map (x, y, z).
+          dm.api.proto.math.Vec3d position = 1;
+
+          // Rtmp live address.
+          string url = 2;
+        }
+        repeated SensorValue sensor_values = 1;
+
+        // Extra sensor information.
+        map<string, string> extra = 2;
+      }
+
+      // Heat Map.
+      // Statistic Map.
+
+      // Others...
+    }
+    repeated Function functions = 2;
+  }
+  repeated Function functions = 5;
+}
+
+message CreateWebAppResponse {
+  // App's unique uid.
+  string uid = 1;
+}
+
+service LuigiService {
+
+  // Create an app of web.
+  rpc CreateWebApp(CreateWebAppRequest) returns (CreateWebAppResponse) {}
+
+}

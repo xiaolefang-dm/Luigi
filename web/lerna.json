@@ -1,0 +1,12 @@
+{
+  "packages": [
+    "common/*"
+  ],
+  "command": {
+    "bootstrap": {
+      "workspace": true
+    }
+  },
+  "version": "independent",
+  "npmClient": "yarn"
+}

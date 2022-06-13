@@ -1,0 +1,43 @@
+.login-panel-wrapper {
+
+  display: inline-flex;
+  flex-direction: column;
+  
+  text-align: center;
+  align-items: center;
+  margin-top: 10%;
+  width: 100%;
+  transition: 0.2s ease;
+
+  .title {
+    color: grey;
+    font-size: 1.5rem;
+    padding:auto;
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+
+  .row {
+    margin: auto;
+    margin-top: 1rem;
+    .checkbox {
+      margin: auto;
+    }
+    .label {
+      margin: auto;
+      text-align: center;
+    }
+  }
+
+  .login-button {
+    margin-top: 2rem;
+    align-self: center;
+  }
+
+  .warning {
+    color: #ff9c00;
+    display: block;
+    font-size: x-small;
+    margin-top: 0.5rem;
+  }
+}
